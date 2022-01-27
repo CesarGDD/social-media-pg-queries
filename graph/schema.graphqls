@@ -1,0 +1,208 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+# type Todo {
+#   id: ID!
+#   text: String!
+#   done: Boolean!
+#   user: User!
+# }
+
+# type User {
+#   id: ID!
+#   name: String!
+# }
+
+# type Query {
+#   todos: [Todo!]!
+# }
+
+# input NewTodo {
+#   text: String!
+#   userId: String!
+# }
+
+# type Mutation {
+#   createTodo(input: NewTodo!): Todo!
+# }
+
+
+scalar Time
+
+# User Scheme
+type User {
+  id: Int!
+  createdAt: Time!
+  updatedAt: Time!
+  username: String!
+  bio: String
+  avatar: String
+  phone: String
+  email: String
+  password: String!
+  status: String
+}
+
+
+input NewUser {
+  username: String!
+  bio: String
+  avatar: String
+  phone: String
+  email: String
+  password: String!
+}
+
+input EditUser {
+  id: Int!
+  bio: String
+  avatar: String
+}
+
+
+# Post Schema
+
+type Post {
+  id: Int!
+  createdAt: Time!
+  updatedAt: Time!
+  url: String!
+  caption: String
+  user_id: Int!
+  # ubication: Map
+}
+
+input NewPost {
+  url: String!
+  caption: String
+  user_id: Int!
+  # lat: Int
+  # lng: Int
+}
+
+input EditPost {
+  id: Int!
+  url: String
+  caption: String
+}
+
+# Comments Schema
+type Comment {
+  id: Int!
+  createdAt: Time!
+  updatedAt: Time!
+  contents: String!
+  user_id: Int!
+  post_id: Int!
+}
+
+input NewComment {
+  contents: String!
+  user_id: Int!
+  post_id: Int!
+}
+
+input EditComment {
+  id: Int!
+  contents: String!
+}
+
+# Likes Schema
+type Like {
+  id: Int!
+  createdAt: Time!
+  user_id: Int!
+  post_id: Int!
+  comment_id: Int!
+}
+
+input NewLike {
+  user_id: Int!
+  post_id: Int
+  comment_id: Int
+}
+
+# Hashtag Schema
+type Hashtag {
+  id: Int!
+  createdAt: Time!
+  title: String!
+}
+
+input NewHashtag {
+  title: String!
+}
+
+input EditHashtag {
+  id: Int!
+  title: String!
+}
+
+
+# Followers Schema
+type Follower {
+  id: Int!
+  createdAt: Time!
+  leader_id: Int!
+  follower_id: Int!
+}
+
+input NewFollower {
+  leader_id: Int!
+  follower_id: Int!
+}
+
+# Querys
+
+type Query {
+  # Users
+  user(username: String!): User! 
+  users: [User!]!
+  # Posts
+  post(id: Int!): Post!
+  posts: [Post!]!
+  # Comments
+  comment(id: Int!): Comment!
+  comments: [Comment!]!
+  # Likes
+  like(id: Int!): Like!
+  likes: [Like!]!
+  # Hashtag
+  hashtag(title: String!): Hashtag!
+  hashtags: [Hashtag!]!
+  # Followers
+  follower(id: Int!): Follower!
+  followers:[Follower!]!
+}
+
+# Mutations
+type Mutation {
+  # Users
+  createUser(input: NewUser):User!
+  updateUser(input: EditUser):User!
+  deleteUser(input: Int):User
+
+  # Posts
+  createPost(input:NewPost):Post!
+  updatePost(input:EditPost):Post!
+  deletePost(input: Int):Post
+
+  # Comments
+  createComment(input: NewComment): Comment!
+  updateComment(input: EditComment): Comment!
+  deleteComment(input: Int): Comment
+
+  # Likes
+  createLike(input: NewLike): Like!
+  deleteLike(input: Int): Like
+
+  # Hashtag
+  createHashtag(input: NewHashtag): Hashtag!
+  updateHashtag(input: EditHashtag): Hashtag!
+  deleteHashtag(input: Int): Hashtag
+
+  # Followers
+  createFollower(input: NewFollower): Follower!
+  deleteFollower(input: Int): Follower
+}
